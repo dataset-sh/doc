@@ -10,38 +10,65 @@ datafact(DATAset-FACTory), is a package that help your create, bundle and publis
 pip install datafact
 ```
 
-## How to
+## Tutorial
 
-### create a new project
+See the [tutorial here](/docs/create-dataset/datafact/intro)
 
-```shell
-datafact new tutorial/hello-world
-```
+[//]: # ()
+[//]: # (### create a new project)
 
-### Build
+[//]: # ()
+[//]: # (```shell)
 
-```shell
-cd tutorial/hello-world
-```
+[//]: # (datafact new tutorial/hello-world)
 
-```shell
-python project.py build
-```
+[//]: # (```)
 
-### Publish
+[//]: # ()
+[//]: # (### Build)
 
-```shell
-python project.py publish
-```
+[//]: # ()
+[//]: # (```shell)
 
-## More templates
+[//]: # (cd tutorial/hello-world)
 
-```shell
-datafact new tutorial/hello-world -t hello-world
-```
+[//]: # (```)
 
-If you wish to use mkb to create synthetic datasets:
+[//]: # ()
+[//]: # (```shell)
 
-```shell
-datafact new tutorial/hello-world -t synthetic
-```
+[//]: # (python project.py build)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (### Publish)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (python project.py publish)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (## More templates)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (datafact new tutorial/hello-world -t hello-world)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (If you wish to use mkb to create synthetic datasets:)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (datafact new tutorial/hello-world -t synthetic)
+
+[//]: # (```)
+
+[//]: # ()

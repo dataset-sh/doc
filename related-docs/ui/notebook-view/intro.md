@@ -38,6 +38,36 @@ function MyPage() {
 }
 ```
 
-### Examples:
+### For docusaurus
+
+If you are using `docusaurus`, you can use the following snippet: 
+
+[Want to know more about this?](https://github.com/facebook/docusaurus/discussions/9435)
+
+```typescript jsx
+import notebook from "./notebook.json"
+
+function MyPage() {
+    const [JupyterNotebookView, setJupyterNotebook] = useState(null);
+    useEffect(() => {
+        import("@dataset.sh/notebook-view").then(setJupyterNotebook);
+    }, [])
+
+    if (!JupyterNotebookView) {
+        return <>
+            loading notebook...
+        </>;
+    }
+
+    return <JupyterNotebookView.JupyterNotebook
+        dangerouslyDisablePurifyHTML={true}
+        dangerouslyAllowHTML={true}
+        notebook={notebook}
+    />;
+
+}
+```
+
+### Examples
 
 For more examples, check out [more examples here](/related-projects/ui/notebook-view/example)
