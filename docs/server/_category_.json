@@ -1,0 +1,15 @@
+{
+  "position": 6.5,
+  "label": "Hosting",
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "Hosting"
+  },
+  "customProps": {
+    "description": "This description can be used in the swizzled DocCard"
+  }
+}
+

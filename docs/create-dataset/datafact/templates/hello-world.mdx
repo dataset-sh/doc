@@ -1,0 +1,208 @@
+---
+title: "Template: hello-world"
+description: Create Datasets with datafact
+---
+
+import {ConsoleCommand} from "@dataset.sh/cmd-output";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+`hello-world` is a `datafact` template for creating simple datasets.
+
+### Create a new project using this template
+<ConsoleCommand
+    input={'datafact new datafact-tutorial/hello-world -t hello-world'}
+    output={
+[`
+where to create this project [./datafact-tutorial/hello-world]:
+Project created successfully.
+# datafact template: hello world
+
+This dataset is built by the datafact template: \`hello-world\`,
+it provides a simple collection of "Hello World" translations in various languages.
+It serves as a practical example for demonstrating the functionalities of the dataset.sh library.
+
+
+# Create and publish dataset
+
+This folder contains a project created by datafact (DATAset FACTory),
+
+You can use this project to build and publish your dataset to [dataset.sh](https://dataset.sh)
+
+## How to modify this project
+
+You will need to modify the following 3 files to create, build, and, publish your own dataset:
+
+* data.py
+  Implement a function called \`create_data_dict\` which produce the content of your dataset.
+
+* type.py
+  Provide your type annotation in the \`data_types\` dictionary in this file.
+
+* README.md
+  Provide the readme document of your dataset in this file.
+
+## Build Dataset
+
+To build your dataset, use command:
+
+\`\`\`shell
+python project.py build
+\`\`\`
+
+## Publish Dataset
+
+To publish your dataset, use command:
+
+\`\`\`shell
+python project.py publish
+\`\`\`
+`]
+    }
+
+/>
+
+Now go to the project folder `datafact-tutorial/hello-world`.
+
+<ConsoleCommand
+    input={'cd datafact-tutorial/hello-world'}
+/>
+
+<ConsoleCommand
+    input={'ls'}
+    output={
+        ['README.md         data.py           datafact.json     project.py        type.py']
+    }
+    showOutput={true}
+/>
+
+### What to modify
+
+You should modify the following files:
+
+* `data.py`
+* `type.py`
+* `README.md`
+
+<Tabs>
+<TabItem value="data" label="data.py" default>
+Implement a function called `create_data_dict` which produce the content of your dataset.
+
+```python title="Example"
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+
+
+def create_main_collection():
+    return [
+        {'language': 'en', 'value': 'Hello World!'},
+        {'language': 'fr', 'value': "Bonjour le monde!"},
+        {'language': 'es', 'value': "¡Hola Mundo!"},
+        {'language': 'de', 'value': "Hallo Welt!"},
+        {'language': 'it', 'value': "Ciao Mondo!"},
+        {'language': 'pt', 'value': "Olá Mundo!"},
+        {'language': 'zh', 'value': "你好，世界！"},
+        {'language': 'ja', 'value': "こんにちは世界！"},
+        {'language': 'hi', 'value': "नमस्ते दुनिया!"},
+        {'language': 'ar', 'value': "مرحبا بالعالم!"},
+        {'language': 'ru', 'value': "Привет, мир!"},
+        {'language': 'ko', 'value': "안녕하세요 세계!"},
+    ]
+
+
+def create_data_dict():
+    return {
+        DEFAULT_COLLECTION_NAME: create_main_collection()
+    }
+```
+</TabItem>
+<TabItem value="type" label="type.py">
+
+Provide your type annotation in the `data_types` dictionary in this file.
+
+```python title="Example"
+from easytype import TypeBuilder
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+
+HelloWorldTranslation = TypeBuilder.create(
+    'HelloWorldTranslation',
+    language=str,
+    value=str
+)
+
+data_types = {
+    DEFAULT_COLLECTION_NAME: HelloWorldTranslation
+}
+```
+</TabItem>
+<TabItem value="readme" label="README.md">
+
+Provide the readme document of your dataset in this file.
+
+~~~markdown title="Example"
+# datafact template: hello world
+
+This dataset is built by the datafact template: `hello-world`,
+it provides a simple collection of "Hello World" translations in various languages.
+It serves as a practical example for demonstrating the functionalities of the dataset.sh library.
+
+
+# Create and publish dataset
+
+This folder contains a project created by datafact (DATAset FACTory),
+
+You can use this project to build and publish your dataset to [dataset.sh](https://dataset.sh)
+
+## How to modify this project
+
+You will need to modify the following 3 files to create, build, and, publish your own dataset:
+
+* data.py
+  Implement a function called `create_data_dict` which produce the content of your dataset.
+
+* type.py
+  Provide your type annotation in the `data_types` dictionary in this file.
+
+* README.md
+  Provide the readme document of your dataset in this file.
+
+## Build Dataset
+
+To build your dataset, use command:
+
+```shell
+python project.py build
+```
+
+## Publish Dataset
+
+To publish your dataset, use command:
+
+```shell
+python project.py publish
+```
+
+~~~
+
+
+
+You can also using the experimental auto-doc feature, to generated a documentation based on the type annotation stored in `type.py`:
+<ConsoleCommand input={'datafact experimental auto-doc'}/>
+
+</TabItem>
+</Tabs>
+
+### Build and publish
+
+To build your dataset
+
+<ConsoleCommand input={'python project.py build'}/>
+
+To preview your build before publish
+<ConsoleCommand input={'python project.py preview show'}/>
+
+To publish your build
+<ConsoleCommand input={'python project.py publish'}/>
+
+### Example: geo/country-code
+
+### More Examples

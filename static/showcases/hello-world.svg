@@ -1,0 +1,60 @@
+<svg
+        width="1200"
+        height="630"
+        viewBox="0 0 1200 630"
+        xmlns="http://www.w3.org/2000/svg"
+        style="background: #141414;"
+>
+
+    <!-- ::::::::::::: BACKGROUND ::::::::::::: -->
+    <!-- Fill the entire canvas with a dark color -->
+    <rect
+            x="0" y="0"
+            width="1200" height="630"
+            fill="#1F293C"
+    />
+
+    <rect
+            x="0" y="0"
+            width="1200" height="100"
+            fill="#44403C"
+    />
+
+    <circle fill="#B91C1C" cx="50" cy="50" r="20"/>
+    <circle fill="#CA8907" cx="120" cy="50" r="20"/>
+    <circle fill="#166534" cx="190" cy="50" r="20"/>
+
+    <!-- ::::::::::::: TITLE TEXT ::::::::::::: -->
+    <text
+            x="50%" y="50%"
+            text-anchor="middle"
+            fill="#E5E7EB"
+            font-family="sans-serif"
+            font-size="64"
+            font-weight="bold"
+    >
+        ✅ dataset: hello/world
+    </text>
+
+
+    <!-- ::::::::::::: DECORATIVE GREEN BAND ::::::::::::: -->
+
+    <!-- Repeated "DATASET" text in various accents -->
+    <text
+            y="560"
+            font-weight="bold"
+            font-family="sans-serif"
+            font-size="56"
+
+    >
+        <!-- Start each word at a new x-position. Adjust spacing or add more if needed. -->
+        <tspan x="560" fill="#166534">a dataset.sh tutorial</tspan>
+    </text>
+
+
+    <!--    <rect-->
+    <!--            x="0" y="580"-->
+    <!--            width="1280" height="240"-->
+    <!--            fill="#44403C"-->
+    <!--    />-->
+</svg>

@@ -1,0 +1,14 @@
+{
+  "position": 1,
+  "label": "Create Dataset",
+  "collapsible": true,
+  "collapsed": false,
+  "className": "red",
+  "link": {
+    "type": "generated-index",
+    "title": "How to create datasets"
+  },
+  "customProps": {
+    "description": "This description can be used in the swizzled DocCard"
+  }
+}

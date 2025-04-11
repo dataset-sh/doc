@@ -1,0 +1,24 @@
+import {NotebookViewExample} from "../../../src/content/notebook/NotebookViewExample"
+
+# Examples
+
+
+```typescript jsx
+import NotebookData from './data/kitchenSink.json'
+import {JupyterNotebook} from "@dataset.sh/notebook-view";
+
+export function NotebookViewExample() {
+
+    return <JupyterNotebook
+        dangerouslyDisablePurifyHTML={true}
+        dangerouslyAllowHTML={true}
+        // @ts-ignore
+        notebook={NotebookData!}
+    />
+}
+```
+The above code will create the notebook render below.
+
+---
+
+<NotebookViewExample/>

@@ -1,0 +1,176 @@
+---
+title: API guide
+---
+
+The following APIs are available for dataset creator:
+
+## dataset writer api
+
+Use `dataset_sh.create` to create a dataset writer.
+
+```python title="dataset.sh writer"
+import dataset_sh as dsh
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+from easytype import TypeBuilder
+
+data = [
+        {'language': 'en', 'value': 'Hello World!'},
+        {'language': 'fr', 'value': "Bonjour le monde!"},
+        {'language': 'es', 'value': "¡Hola Mundo!"},
+        {'language': 'de', 'value': "Hallo Welt!"},
+        {'language': 'it', 'value': "Ciao Mondo!"},
+        {'language': 'pt', 'value': "Olá Mundo!"},
+        {'language': 'zh', 'value': "你好，世界！"},
+        {'language': 'ja', 'value': "こんにちは世界！"},
+        {'language': 'hi', 'value': "नमस्ते दुनिया!"},
+        {'language': 'ar', 'value': "مرحبا بالعالم!"},
+        {'language': 'ru', 'value': "Привет, мир!"},
+        {'language': 'ko', 'value': "안녕하세요 세계!"},
+    ]
+
+
+HelloWorldTranslation = TypeBuilder.create(
+    'HelloWorldTranslation',
+    language=str,
+    value=str
+)
+
+with dsh.create('./hello-world.dtsh') as writer:
+    writer.meta.author = 'your name'
+    writer.meta.authorEmail = 'your email'
+    writer.meta.description = 'describe your dataset version.'
+
+    # you can store custom information in writer.meta.dataset_metadata
+    writer.meta.dataset_metadata = {
+        'some_key': 'some_value'
+    }
+
+    writer.add_collection(
+        # DEFAULT_COLLECTION_NAME = 'main'
+        collection_name=DEFAULT_COLLECTION_NAME, # str
+        data=data, # list[dict]
+        type_annotation=HelloWorldTranslation # optional type annotation
+    )
+
+    writer.add_binary_file('/img/an-image-file.png', b'binary content of image file')
+
+```
+
+## `import_collection` and `import_data`
+
+You can also directly create and import a dataset version by using `import_collection` and `import_data` .
+
+```python title="dataset.sh import collection api"
+import dataset_sh as dsh
+
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+from easytype import TypeBuilder
+
+data = [
+        {'language': 'en', 'value': 'Hello World!'},
+        {'language': 'fr', 'value': "Bonjour le monde!"},
+        {'language': 'es', 'value': "¡Hola Mundo!"},
+        {'language': 'de', 'value': "Hallo Welt!"},
+        {'language': 'it', 'value': "Ciao Mondo!"},
+        {'language': 'pt', 'value': "Olá Mundo!"},
+        {'language': 'zh', 'value': "你好，世界！"},
+        {'language': 'ja', 'value': "こんにちは世界！"},
+        {'language': 'hi', 'value': "नमस्ते दुनिया!"},
+        {'language': 'ar', 'value': "مرحبا بالعالم!"},
+        {'language': 'ru', 'value': "Привет, мир!"},
+        {'language': 'ko', 'value': "안녕하세요 세계!"},
+    ]
+
+
+HelloWorldTranslation = TypeBuilder.create(
+    'HelloWorldTranslation',
+    language=str,
+    value=str
+)
+
+
+new_dataset = dsh.dataset('hello/world')
+
+latest_version = new_dataset.import_collection(
+    collection=data,
+
+    # Optional arguments
+    name=DEFAULT_COLLECTION_NAME,
+    type_annotation=HelloWorldTranslation,
+    tags=None,          #: Optional[List[str]]
+    description=None,   #: Optional[str]
+    as_latest=True,
+    load_author=True
+)
+
+# You can bundle more than one collection using the following API:
+latest_version = new_dataset.import_data(
+    collections = {DEFAULT_COLLECTION_NAME: data},
+
+    # Optional arguments
+    type_dict={DEFAULT_COLLECTION_NAME: HelloWorldTranslation},
+    tags=None,          #: Optional[List[str]]
+    description=None,   #: Optional[str]
+    as_latest=True,
+    load_author=True
+)
+
+
+
+
+```
+
+```python title="dataset.sh utils dump collections api"
+import dataset_sh as dsh
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+from easytype import TypeBuilder
+from dataset_sh.utils.dump import dump_collections, dump_single_collection
+
+data = [
+        {'language': 'en', 'value': 'Hello World!'},
+        {'language': 'fr', 'value': "Bonjour le monde!"},
+        {'language': 'es', 'value': "¡Hola Mundo!"},
+        {'language': 'de', 'value': "Hallo Welt!"},
+        {'language': 'it', 'value': "Ciao Mondo!"},
+        {'language': 'pt', 'value': "Olá Mundo!"},
+        {'language': 'zh', 'value': "你好，世界！"},
+        {'language': 'ja', 'value': "こんにちは世界！"},
+        {'language': 'hi', 'value': "नमस्ते दुनिया!"},
+        {'language': 'ar', 'value': "مرحبا بالعالم!"},
+        {'language': 'ru', 'value': "Привет, мир!"},
+        {'language': 'ko', 'value': "안녕하세요 세계!"},
+    ]
+
+
+HelloWorldTranslation = TypeBuilder.create(
+    'HelloWorldTranslation',
+    language=str,
+    value=str
+)
+
+dump_single_collection(
+    './hello-world.dtsh',
+    data=data,
+
+    # Optional arguments
+    name=DEFAULT_COLLECTION_NAME,
+    type_annotation=HelloWorldTranslation,
+    description=None,           #Optional[str]
+    silent=False,
+    load_author=True,
+)
+
+# Or
+
+dump_collections(
+    './hello-world.dtsh',
+    data_dict,
+
+    # Optional arguments
+    type_dict=None,
+    description: Optional[str] = None,
+    report_item_progress=False,
+    report_collection_progress=False,
+    load_author=True,
+)
+```

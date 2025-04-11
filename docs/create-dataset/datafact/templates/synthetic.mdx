@@ -1,0 +1,299 @@
+---
+title: "Template: synthetic"
+description: Create Synthetic Datasets with datafact
+sidebar_position: 2
+---
+import {ConsoleCommand} from "@dataset.sh/cmd-output";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+`synthetic` is a `datafact` template for creating datasets by generating synthetic using LLM. This template make use of
+another library [mkb](/related-projects/mkb/intro).
+
+> In order to proceed with this template, you need to setup `mkb` according to [this guide](/related-projects/mkb/intro)
+
+### Create a new project using this template
+<ConsoleCommand
+    input={'datafact new datafact-tutorial/synthetic -t synthetic'}
+    output={[
+`
+where to create this project [./datafact-tutorial/synthetic]:
+Project created successfully.
+# datafact template: synthetic
+
+This dataset is built by the datafact template: \`synthetic\`,
+
+# Create and publish dataset
+
+This folder contains a project created by datafact (DATAset FACTory),
+
+You can use this project to build and publish your dataset to [dataset.sh](https://dataset.sh)
+
+## How to modify this project
+
+
+You may want to modify the following files as follows:
+
+* data.py
+    Implement a function called \`create_data_dict\` which produce the content of your dataset.
+
+* type.py
+    Provide your type annotation in the \`data_types\` dictionary in this file.
+
+* fn.py
+    Provide your mkb function definition.
+
+* README.md
+    Provide the readme document of your dataset in this file.
+
+## Build Dataset
+
+To build your dataset, use command:
+
+\`\`\`shell
+python project.py build
+\`\`\`
+
+## Publish Dataset
+
+To publish your dataset, use command:
+
+\`\`\`shell
+python project.py publish
+\`\`\`
+`
+
+    ]}
+/>
+
+
+Now go to the project folder `datafact-tutorial/synthetic`.
+
+<ConsoleCommand
+    input={'cd datafact-tutorial/synthetic'}
+
+/>
+
+<ConsoleCommand
+    input={'ls'}
+    output={['README.md         data.py           datafact.json     fn.py             project.py        type.py']}
+    showOutput={true}
+/>
+
+### What to modify
+
+You should modify the following files:
+
+* `data.py`
+* `type.py`
+* `fn.py`
+* `README.md`
+
+
+<Tabs>
+<TabItem value="data" label="data.py" default>
+Implement a function called `create_data_dict` which produce the content of your dataset.
+
+```python
+
+import sys
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+from fn import generate_greeting_message
+
+
+def create_main_collection():
+    languages = [
+        "English",
+        "Spanish",
+        "Mandarin Chinese",
+        "Hindi",
+        "Arabic",
+        "Portuguese",
+        "Bengali",
+        "Russian",
+        "Japanese",
+        "Punjabi",
+        "German",
+        "Javanese",
+        "Korean",
+        "French",
+        "Telugu",
+        "Vietnamese",
+        "Turkish",
+        "Italian",
+        "Tamil",
+        "Urdu"
+    ]
+
+    batch = generate_greeting_message.batch('generate_greeting_message_batch_0')
+
+    if batch.can_start_batch():
+        for lang in languages:
+            batch.add(lang)
+
+        batch.start_batch()
+        print('Batch started, please wait until it was processed.')
+        sys.exit(1)
+    else:
+        print('batch already started.')
+        status = batch.sync_remote()
+        print(status)
+        if status['status'] == 'finished':
+            items = []
+            for input_args, output in batch.iter_outputs():
+                items.append({
+                    'language': input_args['args'][0],
+                    "value": output.value
+                })
+            return items
+        else:
+            print('batch is not finished, exit dataset building process now.')
+            sys.exit(1)
+
+
+def create_data_dict():
+    return {
+        DEFAULT_COLLECTION_NAME: create_main_collection()
+    }
+
+```
+
+</TabItem>
+<TabItem value="fn" label="fn.py">
+Provide your mkb function definition.
+
+```python
+import sys
+import os
+import click
+from openai import OpenAI
+from mkb import def_fn
+
+mkb_openai_api_key = os.environ.get('MKB_OPENAI_API_KEY', None)
+
+if mkb_openai_api_key is None:
+    open_ai_key_file = os.path.expanduser('~/.openai.key')
+    if os.path.exists(open_ai_key_file):
+        with open(open_ai_key_file) as f:
+            mkb_openai_api_key = f.read().strip()
+
+if mkb_openai_api_key is None or mkb_openai_api_key == '':
+    click.secho('Please set MKB_OPENAI_API_KEY environment variable or ~/.openai.key file.', fg='red')
+    sys.exit(1)
+
+from mkb.impl.openai import GptApiOptions
+
+openai_client = OpenAI(api_key=mkb_openai_api_key)
+
+my_gpt_opts = GptApiOptions(temperature=1.0)
+
+
+@def_fn.openai(client=openai_client, opts=my_gpt_opts)
+@def_fn.with_instruction("Given a language, generate a greeting message in that language.")
+@def_fn.with_example(
+    input='English',
+    output='Hello'
+)
+@def_fn.with_example(
+    input='Chinese',
+    output='你好'
+)
+def generate_greeting_message(lang):
+    # any code you wrote here will be ignored.
+    pass
+
+
+if __name__ == "__main__":
+    names = generate_greeting_message('Spanish')
+    print(names.value)
+```
+
+</TabItem>
+<TabItem value="type" label="type.py">
+Provide your type annotation in the `data_types` dictionary in this file.
+
+```python
+from easytype import TypeBuilder
+from dataset_sh.constants import DEFAULT_COLLECTION_NAME
+
+GreetingMessage = TypeBuilder.create(
+    'GreetingMessage',
+    language=str,
+    value=str
+)
+
+data_types = {
+    DEFAULT_COLLECTION_NAME: GreetingMessage
+}
+```
+</TabItem>
+<TabItem value="readme" label="README.md">
+Provide the readme document of your dataset in this file.
+
+~~~markdown
+# datafact template: synthetic
+
+This dataset is built by the datafact template: `synthetic`,
+
+# Create and publish dataset
+
+This folder contains a project created by datafact (DATAset FACTory),
+
+You can use this project to build and publish your dataset to [dataset.sh](https://dataset.sh)
+
+## How to modify this project
+
+
+You may want to modify the following files as follows:
+
+* data.py
+    Implement a function called `create_data_dict` which produce the content of your dataset.
+
+* type.py
+    Provide your type annotation in the `data_types` dictionary in this file.
+
+* fn.py
+    Provide your mkb function definition.
+
+* README.md
+    Provide the readme document of your dataset in this file.
+
+## Build Dataset
+
+To build your dataset, use command:
+
+```shell
+python project.py build
+```
+
+## Publish Dataset
+
+To publish your dataset, use command:
+
+```shell
+python project.py publish
+```
+~~~
+
+
+You can also using the experimental auto-doc feature, to generated a documentation based on the type annotation stored in `type.py`:
+<ConsoleCommand input={'datafact experimental auto-doc'}/>
+
+</TabItem>
+</Tabs>
+
+### Build and publish
+
+To build your dataset
+<ConsoleCommand input={'python project.py build'}/>
+
+To preview your build before publish
+<ConsoleCommand input={'python project.py preview show'}/>
+
+To publish your build
+<ConsoleCommand input={'python project.py publish'}/>
+
+
+### Example: science/acl-datasets
+
+### More Examples

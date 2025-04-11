@@ -1,0 +1,78 @@
+---
+title: Quickstart
+description: Introduction to datafact
+sidebar_position: 2
+---
+
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList/>
+
+## What is Dataset Factory (datafact)
+
+`datafact` is a dataset bundling framework that help you build, package, and distribute datasets.
+
+## Installation
+To install `datafact`:
+
+```shell
+pip install -U datafact
+```
+
+## Guide
+
+### Choose a template
+
+To see the list of available templates:
+```shell
+ datafact templates
+```
+
+datafact has the following templates:
+1. *hello-world*: suitable for basic dataset projects.
+2. *synthetic*: suitable for creating dataset with synthetic data (via [mkb](/related-projects/mkb/intro)).
+3. *media*: suitable for dataset projects with media files (image, audio, video data).
+
+For more complicated examples:
+
+## Example: Build and Publish hello/world dataset.
+
+Create a new project
+```shell
+datafact new hello/world
+```
+
+Enter the project folder
+```shell
+cd hello/world
+```
+Build the dataset
+```shell
+python project.py build
+```
+
+Preview the build (Optional)
+```shell
+python project.py preview show
+```
+
+Publish the dataset
+```shell
+# publish to local dataset.sh repo
+python project.py publish
+```
+
+View it in dataset.sh web ui.
+```shell
+dataset.sh gui hello/world
+```
+
+Upload it to remote (Optional)
+```shell
+dataset.sh remote -p default upload -s hello/world -t latest hello/world
+```
+
+## More examples
+[Creating Synthetic Dataset](/docs/create-dataset/datafact/synthetic)
+
+[Creating Synthetic Dataset](/docs/create-dataset/datafact/synthetic)

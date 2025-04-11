@@ -1,0 +1,57 @@
+---
+title: Getting Started
+slug: intro
+sidebar_position: 0
+---
+import {DatasetCreationContent, DatasetApplicationContent} from "../src/content/ShowcasesContent";
+
+`dataset.sh` is a dataset manager designed to simplify the process of installing, managing, and publishing datasets.
+We hope to make working with datasets as straightforward as using package managers like npm or pip for programming
+libraries.
+
+## Install
+
+To get started, you can install `dataset.sh` via pip:
+
+```bash
+pip install dataset.sh -U
+dataset.sh --help
+```
+
+
+> Not interested in publishing, but want to see what you can do with dataset?
+> [Jump to here](#how-to-import-datasets)
+
+## How to create and publish datasets
+
+You can build and publish datasets using
+
+* [**dataset factory (datafact)** ](/docs/create-dataset/datafact/intro).
+
+     Our dataset publishing framework, design to make the publishing experience as smooth as possible.
+
+* [**the built-in API**](/docs/create-dataset/via-api):
+
+    more low level and flexible but may require more work.
+
+
+
+### Examples
+
+<DatasetCreationContent/>
+
+## How to import datasets
+
+You can load the content of dataset by following the instruction on our dataset browser web ui.
+
+```shell title="open gui from command line"
+dataset.sh gui hello/world
+```
+
+
+[//]: # (## Application Showcases)
+
+[//]: # ()
+[//]: # (### Examples)
+
+[//]: # (<DatasetApplicationContent/>)
