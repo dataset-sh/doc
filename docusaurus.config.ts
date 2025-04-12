@@ -67,8 +67,8 @@ const config: Config = {
                     sidebarPath: './sidebars.ts',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    // editUrl:
+                    //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
                 blog: {
                     showReadingTime: true,
@@ -78,8 +78,8 @@ const config: Config = {
                     },
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    // editUrl:
+                    //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                     // Useful options to enforce blogging best practices
                     onInlineTags: 'warn',
                     onInlineAuthors: 'warn',
@@ -95,7 +95,7 @@ const config: Config = {
 
     themeConfig: {
         // Replace with your project's social card
-        image: 'img/docusaurus-social-card.jpg',
+        image: 'img/og-dataset-sh.png',
         colorMode: {
             defaultMode: 'light',
             disableSwitch: true,
@@ -128,7 +128,7 @@ const config: Config = {
 
                 { to: '/pricing', label: 'Pricing', position: 'right' },
                 {
-                    href: 'https://github.com/facebook/docusaurus',
+                    href: 'https://github.com/dataset-sh',
                     label: 'GitHub',
                     position: 'right',
                 },
@@ -155,16 +155,13 @@ const config: Config = {
                     items: [
                         {
                             label: 'Stack Overflow',
-                            href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                            href: 'https://stackoverflow.com/questions/tagged/dataset-sh',
                         },
                         {
                             label: 'Discord',
-                            href: 'https://discordapp.com/invite/docusaurus',
+                            href: 'https://discord.gg/WcGDDx5y',
                         },
-                        {
-                            label: 'X',
-                            href: 'https://x.com/docusaurus',
-                        },
+
                     ],
                 },
                 {
@@ -176,7 +173,7 @@ const config: Config = {
                         },
                         {
                             label: 'GitHub',
-                            href: 'https://github.com/facebook/docusaurus',
+                            href: 'https://github.com/dataset-sh',
                         },
                     ],
                 },
