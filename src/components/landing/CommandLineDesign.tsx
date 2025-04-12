@@ -451,6 +451,30 @@ function Articles() {
     </div>
 }
 
+
+function LinkCard({text, url}: { text: React.ReactNode, url: string }) {
+    return <div
+        className={'p-8 shadow shadow-amber-200 rounded-md border-solid border border-yellow-900 text-xl font-bold font-kode'}>
+        <a
+            className={'text-emerald-500'}
+            href={url}
+            target={'_blank'}
+        >{text}</a>
+    </div>
+}
+
+function UsefulLinks() {
+    return <div className="mx-4 md:mx-16 gap-8 grid grid-cols-1 md:grid-cols-1 my-8 max-w-full xl:max-w-screen-xl">
+        <LinkCard text={'⌨️ github'} url={'https://github.com/dataset-sh'}/>
+        <LinkCard text={<div>
+            <p>💬 question, help, bug report?</p>
+            <p>&nbsp;&nbsp;&nbsp;join our discord server</p>
+        </div>} url={'https://discord.gg/WcGDDx5y'}/>
+
+        {/*<ArticleCard text={'📖 Blog Posts'} url={'/blog/pinned-posts'}/>*/}
+    </div>
+}
+
 function BulletPoint({children}: { children: React.ReactNode }) {
     return <li className={'text-emerald-500 pl-2'}>
         {children}
@@ -540,7 +564,8 @@ function MainContentBlock() {
         <SectionHeader title={'What to do next?'}/>
         <Articles/>
 
-
+        <SectionHeader title={'Useful Links'}/>
+        <UsefulLinks></UsefulLinks>
         {/*<SectionHeader title={'Tutorials'}/>*/}
         {/*<Tutorials/>*/}
 
